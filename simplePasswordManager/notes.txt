@@ -1,0 +1,32 @@
+### NOTES ###
+
+1) User gets welcome screen, choose between login and registration
+2) Simple User Registration (Username, Masterpassword, Email)
+3) User Login with Username and Masterpassword
+4) ...
+
+
+### Code Snippets ###
+
+------------------------------------------------------------------------------------------------------------------------
+# connect to sqlite database and create a table
+path = "pwm_db.sqlite"
+connection = sqlite3.connect(path)
+# create users table if not exists
+sql_create_table = "CREATE TABLE IF NOT EXISTS users (id integer PRIMARY KEY, username varchar(20) NOT NULL, " \
+                   "email varchar(30) NOT NULL, password varchar(30) NOT NULL) "
+cursor = connection.cursor()
+cursor.execute(sql_create_table)
+print("passed this point!")
+------------------------------------------------------------------------------------------------------------------------
+
+### Useful Commands ###
+
+pip install sqlalchemy --> install SQLAlchemy
+sqlalchemy.__version__ --> test SQLAlchemy
+
+### Useful websites ###
+https://stackoverflow.com/questions/2047814/is-it-possible-to-store-python-class-objects-in-sqlite
+https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_core_executing_expression.htm
+https://www.pythoncentral.io/sqlalchemy-orm-examples/
+https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm
