@@ -13,7 +13,7 @@ class User(Base):
     id = Column(Integer, primary_key=True)
     username = Column(String(30), unique=True)
     email = Column(String(30), nullable=True)
-    password = Column(String(30))
+    password = Column(String(128))
 
     # constructor
     def __init__(self, username, email, password):

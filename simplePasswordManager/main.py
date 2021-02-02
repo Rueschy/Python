@@ -1,4 +1,5 @@
 from user import User, add_user, get_user
+import bcrypt
 
 
 # function for registration, check if user input is valid
@@ -10,7 +11,9 @@ def register(username, email, password, confirmPW):
     elif password != confirmPW:
         print("Entered passwords do not match!")
     else:
-        add_user(username, email, password)
+        password = password.encode("utf-8")
+        hashed = bcrypt.hashpw(password, bcrypt.gensalt(rounds=15))
+        add_user(username, email, hashed)
         print("Your registration was successful!")
 
 
@@ -18,15 +21,20 @@ def register(username, email, password, confirmPW):
 def login(username, password):
     if username == "" or password == "":
         print("Username or password is empty!")
+        return False
     else:
         user = get_user(username)
         if not user:
             print("No user with this username found!")
+            return False
         else:
-            if user.password == password:
+            password = password.encode("utf-8")
+            if bcrypt.checkpw(password, user.password):
                 print("Logged in successfully!")
+                return True
             else:
                 print("Wrong password!")
+                return False
 
 
 # Welcome message + user chooses between login and register
@@ -38,7 +46,17 @@ if choice == "login":
     print("### LOGIN ### \n")
     username = input("Enter username: ")
     password = input("Enter password: ")
-    login(username, password)
+    success = login(username, password)
+
+    # if login was successful, the user can show all saved items, show a specific item,
+    # make a new item or exit the program
+    if success:
+        print("Welcome " + username + "\n")
+        choice = input("Select an option: \n")
+
+        if choice == "exit":
+            exit()
+
 elif choice == "register":
     print("### REGISTRATION ### \n")
     username = input("Enter username: ")
