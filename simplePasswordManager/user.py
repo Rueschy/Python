@@ -59,3 +59,9 @@ def get_user(username):
         if user.username == username:
             return user
     return False
+
+
+def get_all_users():
+    s = session()
+    users = s.query.all()
+    return users
