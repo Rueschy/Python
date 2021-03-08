@@ -3,7 +3,7 @@ from sqlalchemy import Table, Column, Integer, String, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-engine = create_engine('sqlite:///pwmdb.sqlite', echo=True)
+engine = create_engine('sqlite:///pwmdb.sqlite')    # , echo=True for output!
 Base = declarative_base(bind=engine)
 
 
@@ -20,25 +20,6 @@ class User(Base):
         self.username = username
         self.email = email
         self.password = password
-
-    # getters and setters
-    def get_username(self):
-        return self.username
-
-    def get_email(self):
-        return self.email
-
-    def get_password(self):
-        return self.password
-
-    def set_username(self, value):
-        self.username = value
-
-    def set_email(self, value):
-        self.email = value
-
-    def set_password(self, value):
-        self.password = value
 
 
 session = sessionmaker()

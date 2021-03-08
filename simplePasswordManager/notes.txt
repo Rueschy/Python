@@ -18,6 +18,38 @@ sql_create_table = "CREATE TABLE IF NOT EXISTS users (id integer PRIMARY KEY, us
 cursor = connection.cursor()
 cursor.execute(sql_create_table)
 print("passed this point!")
+
+-----------------------------------------
+
+# getters and setters
+    def get_username(self):
+        return self.username
+
+    def get_email(self):
+        return self.email
+
+    def get_password(self):
+        return self.password
+
+    def set_username(self, value):
+        self.username = value
+
+    def set_email(self, value):
+        self.email = value
+
+    def set_password(self, value):
+        self.password = value
+
+-----------------------------------------
+
+for item in s.query(Item):
+        if item.name == name:
+            return item
+    return False
+
+-----------------------------------------
+
+
 ------------------------------------------------------------------------------------------------------------------------
 
 ### Useful Commands ###

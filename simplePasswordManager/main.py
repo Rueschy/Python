@@ -1,5 +1,5 @@
 from user import User, add_user, get_user
-from item import Item, add_item, get_item, get_all_items
+from item import Item, add_item, get_item, get_all_items, delete_item
 import bcrypt
 
 
@@ -31,7 +31,7 @@ def login(username, password):
         else:
             password = password.encode("utf-8")
             if bcrypt.checkpw(password, user.password):
-                print("\nLogged in successfully!")
+                print("\nLogged in successfully!\n")
                 return True
             else:
                 print("Wrong password!")
@@ -49,12 +49,12 @@ def add(item_name, item_username, item_password):
 
 
 # Welcome message + user chooses between login and register
-print("\nWelcome to Rueschy's simple password-manager! \nWould you like to SIGN-IN or to REGISTER yourself? \n ")
+print("\nWelcome to Rueschy's Simple Password Manager! \nWould you like to SIGN-IN or to REGISTER yourself? \n ")
 choice = input("Type 'login' or 'register' \n")
 
 # check if user wants to login
 if choice == "login":
-    print("### LOGIN ### \n")
+    print("\n### LOGIN ###")
     username = input("Enter username: ")
     password = input("Enter password: ")
     success = login(username, password)
@@ -62,36 +62,50 @@ if choice == "login":
     # if login was successful, the user can show all saved items, show a specific item,
     # add/delete/update an item or exit the program
     if success:
+        print("### Welcome " + username + "! This is your Simple Password Manager! ###\n")
         while True:
-            print("### Welcome " + username + "! ###\n")
-            choice = input("Select an option: \n <show all> \n <show> \n <add> \n <delete> \n <update> \n <exit> \n")
+            choice = input("Select an option: \n <show all>  <show>  <add>  <delete>  <update>  <exit> \n")
 
             if choice == "show all":
-                print("### Showing all items! ###\n")
-                pass
+                print("\n### Showing all items! ###")
+                items = get_all_items()
+                for item in items:
+                    print(item.name + " - " + item.username + " - " + item.password + "\n")
 
             elif choice == "show":
-                print("### Showing item! ###\n")
-                pass
+                search = input("Enter the name of the item you want to show: \n")
+                item = get_item(search)
+                if not item:
+                    print("No item found! \n")
+                else:
+                    print("\n### Showing item! ###\n" + item.name + " - " + item.username + " - " + item.password + "\n")
 
             elif choice == "add":
-                print("### Add new item! ###\n")
+                print("\n### Add new item! ###")
                 item_name = input("Enter item name: ")
                 item_username = input("Enter username: ")
                 item_password = input("Enter password: ")
                 add(item_name, item_username, item_password)
 
             elif choice == "delete":
-                print("### Deleting item! ###\n")
+                search = input("Enter the name of the item you want to delete: \n")
+                if delete_item(search):
+                    print("\n Item deleted!\n")
+                else:
+                    print("\nCould not delete item. No such item found!\n")
+
+
+            elif choice == "update":
+                print("\n### Updating item! ###")
                 pass
 
             elif choice == "exit":
-                print("Exiting the program!\n")
+                print("\n### Exiting the program! ###")
                 break
 
 # check if user wants to register
 elif choice == "register":
-    print("### REGISTRATION ### \n")
+    print("\n### REGISTRATION ###")
     username = input("Enter username: ")
     email = input("Enter email: ")
     password = input("Enter password: ")
