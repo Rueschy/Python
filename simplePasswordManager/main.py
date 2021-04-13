@@ -1,5 +1,5 @@
 from user import User, add_user, get_user
-from item import Item, add_item, get_item, get_all_items, delete_item
+from item import Item, add_item, get_item, get_all_items, delete_item, update_item
 import bcrypt
 
 
@@ -48,6 +48,15 @@ def add(item_name, item_username, item_password):
         print("\n Item added successfully!\n")
 
 
+def update(item, new_username, new_password):
+    if new_username == "":
+        new_username = item.username
+    if new_password == "":
+        new_password = item.password
+    update_item(item.name, new_username, new_password)
+    print("\n Item updated successfully!\n")
+
+
 # Welcome message + user chooses between login and register
 print("\nWelcome to Rueschy's Simple Password Manager! \nWould you like to SIGN-IN or to REGISTER yourself? \n ")
 choice = input("Type 'login' or 'register' \n")
@@ -94,10 +103,15 @@ if choice == "login":
                 else:
                     print("\nCould not delete item. No such item found!\n")
 
-
             elif choice == "update":
-                print("\n### Updating item! ###")
-                pass
+                search = input("Enter the name of the item you want to update: \n")
+                item = get_item(search)
+                if not item:
+                    print("No item found! \n")
+                else:
+                    new_username = input("Enter new username or leave blank: ")
+                    new_password = input("Enter new password or leave blank: ")
+                    update(item, new_username, new_password)
 
             elif choice == "exit":
                 print("\n### Exiting the program! ###")

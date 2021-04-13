@@ -55,3 +55,10 @@ def delete_item(name):
             return True
         else:
             return False
+
+def update_item(name, new_username, new_password):
+    s = session()
+    item = s.query(Item).filter(Item.name == name).first()
+    item.username = new_username
+    item.password = new_password
+    s.commit()
